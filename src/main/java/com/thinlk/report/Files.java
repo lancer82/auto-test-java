@@ -12,7 +12,7 @@ import java.util.Properties;
  * @author Chandrashekhar G
  * 
  */
-class Files {
+public class Files {
 
 //	static WebDriver webdriver = null;
 	Properties prop = new Properties();
@@ -22,9 +22,9 @@ class Files {
 	 * Write all the files.
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws PropertiesFileNotFound the properties file not found
+	 *
 	 */
-	public void writeFile() throws IOException, PropertiesFileNotFound {
+	public void writeFile() throws IOException{
 		getProperties();
 		readFromJARFile("Chart.min.js", "Report//data//Chart.min.js");
 		readFromJARFile("Chart.PieceLabel.js", "Report//data//Chart.PieceLabel.js");
@@ -44,7 +44,7 @@ class Files {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void readFromJARFile(String filename, String dest) throws IOException {
-		InputStream is = getClass().getResourceAsStream(filename);
+		InputStream is = new FileInputStream("src/main/resources/template/" + filename);
 		InputStreamReader isr = new InputStreamReader(is);
 		BufferedReader br = new BufferedReader(isr);
 		File f = new File(dest);
@@ -65,19 +65,20 @@ class Files {
 	/**
 	 * Gets the properties.
 	 *
-	 * @return the properties
 	 */
 	public void getProperties() {
 
 		try {
-			URL url = ClassLoader.getSystemResource("report.properties");
-			prop.load(url.openStream());
+			// Use InputStream read properties file
+			BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/report.properties"));
+			//InputStream is = Files.class.getClassLoader().getResourceAsStream("src/main/resources/report.properties");
+			prop.load(bufferedReader);
 		} catch (Exception e) {
 			try {
 				writeProperties();
 			//	throw new PropertiesFileNotFound(
-				//		"Properties File Not Found in Source location\nPlease download , customize and add in source folder");
-			System.err.println("Properties File Not Found in Source location\nPlease download , customize and add in source folder");
+			//		"Properties File Not Found in Source location\nPlease download , customize and add in source folder");
+				System.err.println("Properties File Not Found in Source location\nPlease download , customize and add in source folder");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -178,20 +179,6 @@ class Files {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-	}
-
-}
-
-@SuppressWarnings("serial")
-class PropertiesFileNotFound extends Exception {
-
-	/**
-	 * Instantiates a new properties file not found.
-	 *
-	 * @param message the message
-	 */
-	public PropertiesFileNotFound(String message) {
-		super(message);
 	}
 
 }

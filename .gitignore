@@ -1,2 +1,4 @@
 # Project exclude paths
 /extent-report/target/
+/Old Reports/*
+/Report/*
