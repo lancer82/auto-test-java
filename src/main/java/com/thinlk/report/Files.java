@@ -174,7 +174,7 @@ public class Files {
 	public static void JSON_report(String report){
 		try {
 			FileWriter fw = new FileWriter(filepathJSON);
-			fw.write("var data = "+report+";");
+			fw.write("let data = "+report+";");
 			fw.close();
 		} catch (Exception e) {
 			System.out.println(e);

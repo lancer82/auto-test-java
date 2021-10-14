@@ -74,7 +74,7 @@ public class Listener implements ITestListener, ISuiteListener, IInvokedMethodLi
      * @see org.testng.ITestListener#onTestSuccess(org.testng.ITestResult)
      */
     public void onTestSuccess(ITestResult arg0) {
-        Reporter.onTestPass(arg0.getTestName(),arg0.getMethod().getMethodName());
+        printTestResults(arg0);
     }
 
     /*
@@ -127,7 +127,7 @@ public class Listener implements ITestListener, ISuiteListener, IInvokedMethodLi
                 status = "FAILED";
                 break;
             case ITestResult.SKIP:
-                status = "SKIPED";
+                status = "SKIPPED";
         }
 
         String excepetion = "--";
@@ -150,7 +150,7 @@ public class Listener implements ITestListener, ISuiteListener, IInvokedMethodLi
                     //XmlWriter.FailedSuitWriter(_class);
                     faildClasses.add(_class);
                 }
-            } else if (status.equals("SKIPED") && result.getThrowable().getMessage() != null) {
+            } else if (status.equals("SKIPPED") && result.getThrowable().getMessage() != null) {
                 excepetion = result.getThrowable().getMessage();
 
                 if (!faildClasses.contains(_class)) {
@@ -158,7 +158,7 @@ public class Listener implements ITestListener, ISuiteListener, IInvokedMethodLi
                     //XmlWriter.FailedSuitWriter(_class);
                     faildClasses.add(_class);
                 }
-            } else if ((status.equals("FAILED") || status.equals("SKIPED")) && faildClasses.contains(_class) == false) {
+            } else if ((status.equals("FAILED") || status.equals("SKIPPED")) && faildClasses.contains(_class) == false) {
                 //Files.takeSnapShot(no_of_test);
                 //XmlWriter.FailedSuitWriter(_class);
                 faildClasses.add(_class);

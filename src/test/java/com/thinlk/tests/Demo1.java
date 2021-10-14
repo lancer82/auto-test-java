@@ -3,6 +3,7 @@ package com.thinlk.tests;
 import com.thinlk.report.Listener;
 import com.thinlk.report.Files;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -23,7 +24,7 @@ public class Demo1 {
     public void webLoginCarlogin()
     {
         //selenium
-        Assert.assertTrue(false);
+        Assert.fail();
         System.out.println("webLoginCarlogin");
     }
 
@@ -41,6 +42,11 @@ public class Demo1 {
         System.out.println("LoginAPIcarLoan");
     }
 
+    @Test
+    public void skipTest()
+    {
+        throw new SkipException("Skip the test");
+    }
 
     @BeforeMethod
     public void beforeMethodTest()
